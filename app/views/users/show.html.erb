@@ -1,0 +1,22 @@
+<h1>User Home Page</h1>
+<h2>user details: </h2>
+<p>Name: <%= @user[:name] %></p>
+<p>Email: <%= @user[:email] %></p>
+<a href="/users/<%= @user[:id] %>/edit">Edit Profile</a>
+<h2>My Secrets:</h2>
+<% @secrets.each do |secret| %>
+<p>"<%= secret.content %>"</p>
+<p><%= secret.likes.count %> likes</p>
+<form action="/secrets/<%= secret.id %>" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="hidden" name="_method" value="delete">
+	<input type="hidden" name="secret_id" value="<%= secret.id %>">
+	<input type="submit" value="Delete">
+</form>
+<% end %>
+<h2>Enter a new secret:</h2>
+<form action='/secrets' method='post'>
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+	<input type="text" name="New Secret" placeholder="New Secret">
+	<input type="submit" value="Create Secret">
+</form>
